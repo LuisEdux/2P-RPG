@@ -3,9 +3,9 @@
 //
 
 #include "Combat.h"
-#include <string>
+#include <cstring>
+#include <algorithm>
 #include <iostream>
-#include <utility>
 
 using namespace std;
 
@@ -46,18 +46,18 @@ void Combat::addParticipant(Character *participant) {
 }
 
 void Combat::combatPrep() {
-    // Sort participants by speed
+    // Ordena los participantes por velocidad
     sort(participants.begin(), participants.end(), compareSpeed);
 }
 
-string Combat::toString() {
+char* Combat::toString() {
     string result = "";
     vector<Character*>::iterator it;
     for(it = participants.begin(); it != participants.end(); it++){
-        result += (*it)->toString() + "\n";
+        result += (*it)->toString();  "\n";
     }
     cout<<"===================="<<endl;
-    return result;
+    return strdup(result.c_str());
 }
 
 Character* Combat::getTarget(Character* attacker) {
@@ -75,7 +75,7 @@ void Combat::doCombat() {
     cout<< "Inicio del combate" << endl;
     combatPrep();
     int round = 1;
-    //Este while representa las rondas del combate
+    // Este while representa las rondas del combate
     while(enemies.size() > 0 && partyMembers.size() > 0) {
         cout<<"Round " << round << endl;
         vector<Character*>::iterator it = participants.begin();
@@ -89,7 +89,6 @@ void Combat::doCombat() {
         cout << "You win!" << endl;
     } else {
         cout << "You lose!" << endl;
-
     }
 }
 
@@ -99,7 +98,7 @@ void Combat::executeActions(vector<Character*>::iterator participant) {
         currentAction.action();
         actionQueue.pop();
 
-        //Check if there are any dead characters
+        // Revisa si hay personajes muertos
         if(currentAction.target != NULL) {
             checkParticipantStatus(*participant);
             checkParticipantStatus(currentAction.target);
@@ -119,8 +118,8 @@ void Combat::checkParticipantStatus(Character *participant) {
 }
 
 void Combat::registerActions(vector<Character*>::iterator participantIterator) {
-    //Este while representa el turno de cada participante
-    //La eleccion que cada personaje elije en su turno
+    // Este while representa el turno de cada participante
+    // La elección que cada personaje elige en su turno
     while(participantIterator != participants.end()) {
         if((*participantIterator)->getIsPlayer()) {
             Action playerAction = ((Player*) *participantIterator)->takeAction(enemies);
