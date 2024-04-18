@@ -4,10 +4,11 @@
 
 #include "Player.h"
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
-Player::Player(string _name, int _health, int _attack, int _defense, int _speed) : Character(_name, _health, _attack, _defense, _speed, true) {
+Player::Player(char* _name, int _health, int _attack, int _defense, int _speed) : Character(_name, _health, _attack, _defense, _speed, true) {
     level = 1;
     experience = 0;
 }
@@ -60,8 +61,8 @@ Character* Player::selectTarget(vector<Enemy*> possibleTargets) {
 Action Player::takeAction(vector<Enemy*> enemies) {
     int action = 0;
     cout << "Elige una Accion: " << endl
-    << "1. Atacar" << endl
-    << "2. Defenderte" << endl;
+         << "1. Atacar" << endl
+         << "2. Defenderte" << endl;
 
     //TODO: Validate input
     cin >> action;

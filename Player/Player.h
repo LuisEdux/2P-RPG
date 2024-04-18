@@ -12,15 +12,15 @@
 class Enemy;
 
 class Player: public Character {
-    //TODO: Implement Classes (Mage, Warrior, Rogue, etc..)
-    //TODO: Implement Inventory
+    //TODO: Implementar Clases (Mago, Guerrero, Pícaro, etc.)
+    //TODO: Implementar Inventario
 private:
     int level;
     int experience;
 
     void levelUp();
 public:
-    Player(string _name, int _health, int _attack, int _defense, int _speed);
+    Player(char* _name, int _health, int _attack, int _defense, int _speed); // Cambio de string a char
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
     Character* selectTarget(vector<Enemy*> possibleTargets);
@@ -28,7 +28,7 @@ public:
 
     void gainExperience(int exp);
 
-    //TODO: Implement use object
+    //TODO: Implementar uso de objeto
     void displayStats() const;
 };
 
