@@ -21,11 +21,16 @@ void Player::takeDamage(int damage) {
 
     health-= trueDamage;
 
-    cout << name << " took " << trueDamage << " damage!" << endl;
+    if(trueDamage > 0){
+        cout << name << " Recibio " << trueDamage << " de damage!" << endl;
 
-    if(health <= 0) {
-        cout << name << " has been defeated!" << endl;
+        if(health <= 0) {
+            cout << name << " Haz Sido Derrotado" << endl;
+        }
+    } else {
+        cout << getName() << " Se Defendio Del Ataque" << endl;
     }
+
 }
 
 void Player::levelUp() {
@@ -42,7 +47,7 @@ void Player::gainExperience(int exp) {
 
 Character* Player::selectTarget(vector<Enemy*> possibleTargets) {
     int selectedTarget = 0;
-    cout << "Select a target: " << endl;
+    cout << "Selecciona A quien Atacar: " << endl;
     for (int i = 0; i < possibleTargets.size(); i++) {
         cout << i << ". " << possibleTargets[i]->getName() << endl;
     }
@@ -54,13 +59,16 @@ Character* Player::selectTarget(vector<Enemy*> possibleTargets) {
 
 Action Player::takeAction(vector<Enemy*> enemies) {
     int action = 0;
-    cout << "Select an action: " << endl
-    << "1. Attack" << endl;
+    cout << "Elige una Accion: " << endl
+    << "1. Atacar" << endl
+    << "2. Defenderte" << endl;
 
     //TODO: Validate input
     cin >> action;
     Action currentAction;
     Character* target = nullptr;
+
+    unDefend();
 
     switch(action) {
         case 1:
@@ -70,6 +78,13 @@ Action Player::takeAction(vector<Enemy*> enemies) {
                 doAttack(target);
             };
             currentAction.speed = getSpeed();
+            break;
+        case 2:
+            currentAction.action = [this](){
+                defend();
+            };
+
+            currentAction.speed = 9999999;
             break;
         default:
             cout << "Invalid action" << endl;

@@ -100,8 +100,10 @@ void Combat::executeActions(vector<Character*>::iterator participant) {
         actionQueue.pop();
 
         //Check if there are any dead characters
-        checkParticipantStatus(*participant);
-        checkParticipantStatus(currentAction.target);
+        if(currentAction.target != NULL) {
+            checkParticipantStatus(*participant);
+            checkParticipantStatus(currentAction.target);
+        }
     }
 }
 

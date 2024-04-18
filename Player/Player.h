@@ -29,6 +29,7 @@ public:
     void gainExperience(int exp);
 
     //TODO: Implement use object
+    void displayStats() const;
 };
 
 
