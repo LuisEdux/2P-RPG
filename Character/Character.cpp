@@ -6,7 +6,7 @@
 #include<iostream>
 
 using namespace std;
-Character::Character(string _name, int _health, int _attack, int _defense, int _speed, bool _isPlayer) {
+Character::Character(ctring _name, int _health, int _attack, int _defense, int _speed, bool _isPlayer) {
     name = _name;
     health = _health;
     maxHealth = _health;
