@@ -3,11 +3,14 @@
 //
 
 #include "Character.h"
-#include<iostream>
+#include <iostream>
+#include <cstring> 
 
 using namespace std;
+
 Character::Character(char* _name, int _health, int _attack, int _defense, int _speed, bool _isPlayer) {
-    name = _name;
+
+    strcpy(name, _name);
     health = _health;
     maxHealth = _health;
     attack = _attack;
@@ -17,7 +20,7 @@ Character::Character(char* _name, int _health, int _attack, int _defense, int _s
     isPlayer = _isPlayer;
 }
 
-string Character::getName() {
+char* Character::getName() {
     return name;
 }
 
@@ -33,13 +36,16 @@ int Character::getDefense() {
     return defense;
 }
 
-
 int Character::getSpeed() {
     return speed;
 }
 
-string Character::toString() {
-    return "Name: " + name + "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed);
+char* Character::toString() {
+    
+    char buffer[256];
+    snprintf(buffer, sizeof(buffer), "Name: %s\nHealth: %d\nAttack: %d\nDefense: %d\nSpeed: %d", name, health, attack, defense, speed);
+    
+    return strdup(buffer);
 }
 
 bool Character::getIsPlayer() {
@@ -47,11 +53,9 @@ bool Character::getIsPlayer() {
 }
 
 void Character::defend() {
-    cout<<getName()<<" aumento su defensa."<<endl;
-
-    defense += (maxDefense*.2);
-
-    cout<<"Defense: "<<defense<<endl;
+    cout << name << " aumento su defensa." << endl;
+    defense += (maxDefense * 0.2);
+    cout << "Defense: " << defense << endl;
 }
 
 void Character::unDefend() {
@@ -66,8 +70,8 @@ int Character::getMaxHealth() {
     return maxHealth;
 }
 
-bool Character::flee(Character*target) {
-    if(this->speed > target->speed)
+bool Character::flee(Character* target) {
+    if (this->speed > target->speed)
         return true;
 
     int chance = rand() % 100;

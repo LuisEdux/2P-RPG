@@ -10,7 +10,7 @@ using namespace std;
 
 class Character {
 protected:
-    char* name[30];
+    char name[30];
     int health;
     int attack;
     int defense;
@@ -28,7 +28,7 @@ public:
     //Incrementar la defensa un 20% solo por el turno actual
 
     bool flee(Character* target);
-    string getName();
+    char* getName();
     int getHealth();
 
     int getAttack();
@@ -39,7 +39,7 @@ public:
     int getMaxDefense();
     bool getIsPlayer();
     int getSpeed();
-    string toString();
+    char* toString();
 };
 
 
