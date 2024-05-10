@@ -1,10 +1,5 @@
-//
-// Created by Victor Navarro on 15/02/24.
-//
-
-#include "Player.h"
 #include <iostream>
-#include <cstring>
+#include "Player.h"
 
 using namespace std;
 
@@ -20,33 +15,68 @@ void Player::doAttack(Character *target) {
 void Player::takeDamage(int damage) {
     int trueDamage = damage - defense;
 
-    health-= trueDamage;
+    health -= trueDamage;
 
-    if(trueDamage > 0){
+    if (trueDamage > 0) {
         cout << name << " Recibio " << trueDamage << " de damage!" << endl;
 
-        if(health <= 0) {
+        if (health <= 0) {
             cout << name << " Haz Sido Derrotado" << endl;
         }
     } else {
+        gainExperience(10);
         cout << getName() << " Se Defendio Del Ataque" << endl;
     }
-
 }
 
 void Player::levelUp() {
     level++;
+    health += 0;
+    attack += 0;
+    defense += 0;
+    selectAttributeToUpgrade();
+}
+
+void Player::selectAttributeToUpgrade() {
+    int choice;
+    cout << "Selecciona el atributo para aumentar:" << endl;
+    cout << "1. Salud" << endl;
+    cout << "2. Ataque" << endl;
+    cout << "3. Defensa" << endl;
+
+    cin >> choice;
+    switch (choice) {
+        case 1:
+            health += 10; 
+            cout << "Salud aumentada a " << health << endl;
+            break;
+        case 2:
+            attack += 10; 
+            cout << "Ataque aumentado a " << attack << endl;
+            break;
+        case 3:
+            defense += 10; 
+            cout << "Defensa aumentada a " << defense << endl;
+            break;
+        default:
+            cout << "Opción inválida. No se ha realizado ningún cambio en los atributos." << endl;
+            break;
+    }
+    cout << "Nuevas estadisticas:" << endl;
+    cout << "Salud: " << health << endl;
+    cout << "Ataque: " << attack << endl;
+    cout << "Defensa: " << defense << endl;
 }
 
 void Player::gainExperience(int exp) {
     experience += exp;
     if (experience >= 100) {
         levelUp();
-        experience = 100-experience;
+        experience = experience - 100;
     }
 }
 
-Character* Player::selectTarget(vector<Enemy*> possibleTargets) {
+Character* Player::selectTarget(std::vector<Enemy*> possibleTargets) {
     int selectedTarget = 0;
     cout << "Selecciona A quien Atacar: " << endl;
     for (int i = 0; i < possibleTargets.size(); i++) {
@@ -58,7 +88,7 @@ Character* Player::selectTarget(vector<Enemy*> possibleTargets) {
     return possibleTargets[selectedTarget];
 }
 
-Action Player::takeAction(vector<Enemy*> enemies) {
+Action Player::takeAction(std::vector<Enemy*> enemies) {
     int action = 0;
     cout << "Elige una Accion: " << endl
          << "1. Atacar" << endl
